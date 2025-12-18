@@ -1,0 +1,2 @@
+# omarchy
+Reproducable Omarchy Setup
