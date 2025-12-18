@@ -8,11 +8,14 @@ Dotfiles are managed in a separate repository and linked during install.
 ## Structure
 
 suppliment/
+
 ├── install-all.sh          # Entry point
+
 ├── omarchy-overrides.conf  # Hyprland / Omarchy overrides
+
 └── install/                # Modular install scripts
     └── installs.sh
-
+    
 ## Usage
 
 ```bash
