@@ -1,0 +1,19 @@
+# OS / editor junk
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Secrets (never commit)
+.env
+*.key
+*.pem
+id_rsa*
+known_hosts
+
+# Generated / local-only
+.cache/
+.tmp/
