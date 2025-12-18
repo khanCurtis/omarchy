@@ -19,7 +19,7 @@ suppliment/
 ## Usage
 
 ```bash
-git clone https://github.com/<you>/omarchy-setup.git
+git clone https://github.com/khanCurtis/omarchy.git
 cd omarchy-setup/suppliment
 chmod +x install-all.sh install/*.sh
 ./install-all.sh
