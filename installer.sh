@@ -1,29 +1,56 @@
 #!/usr/bin/env bash
-set -e
+set -uo pipefail
 
-DIR="$(cd "$(dirname "$0")/supplement" && pwd)"
+GREEN='\033[1;32m'
+RED='\033[1;31m'
+NC='\033[0m'
 
-cd "$DIR"
+DIR="$(cd "$(dirname "$0")" && pwd)/supplement"
+PID=""
+
+abort() {
+  echo -e "\n${RED}Installer aborted${NC}"
+  [[ -n "$PID" ]] && kill -TERM -- "-$PID" 2>/dev/null
+  exit 130
+}
+
+trap abort SIGINT SIGTERM
 
 if ! command -v fzf >/dev/null; then
-  sudo pacman -S --noconfirm fzf
+  echo -e "${RED}Please install fzf before running this script.${NC}"
+  echo "sudo pacman -S fzf"
+  exit 1
 fi
 
-scripts=$(printf "%s\n" *.sh | sort)
-
-selected=$(echo "$scripts" | fzf \
-  --multi \
-  --prompt="Select install scripts > " \
-  --header="TAB = select | ENTER = run" \
+mapfile -t SCRIPTS < <(
+  find "$DIR" -maxdepth 1 -type f -name '*.sh' -printf '%f\n' | sort
 )
 
-[ -z "$selected" ] && exit 0
+SELECTED=$(printf "%s\n" "${SCRIPTS[@]}" | \
+  fzf --multi \
+      --bind 'space:toggle,ctrl-a:select-all,ctrl-d:deselect-all' \
+      --header "SPACE = toggle | Ctrl-a = select all | Ctrl-d = deselect | Enter = install"
+)
 
-echo "Running selected installations..."
-for script in $selected; do
-  echo "-> Installing $script"
-  chmod +x "$script"
-  ./"$script"
+[[ -z "$SELECTED" ]] && echo "Nothing selected, exiting..." && exit 0
+
+echo
+for script in $SELECTED; do
+  echo -e "${GREEN}==> Installing $script${NC}"
+
+  # Run in its own process group
+  setsid bash "$DIR/$script" &
+  PID=$!
+
+  if ! wait "$PID"; then
+    echo -e "${RED}✖ $script failed, continuing...${NC}"
+  else
+    echo -e "${GREEN}✓ $script completed${NC}"
+  fi
+
+  PID=""
+  echo
 done
 
-echo "✅ All installs complete"
+echo -e "${GREEN}✅ All installs complete${NC}"
+
