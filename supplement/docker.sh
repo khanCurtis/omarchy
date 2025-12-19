@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -e
 
-sudo pacman -S --noconfirm docker lazydocker
+sudo pacman -S --noconfirm docker
