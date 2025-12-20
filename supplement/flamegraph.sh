@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -e
 
-yay -S --noconfirm perl-flamegraph
+sudo pacman -S --noconfirm cargo-flamegraph
