@@ -13,4 +13,4 @@ sudo pacman -S --noconfirm rustup
 
 rustup componant add clippy rustfmt rust-analyzer rust-src
 
-cargo install cargo-watch cargo-edit cargo-audit cargo-outdated cargo-fuzz cargo-tarpaulin
+cargo install cargo-watch cargo-edit cargo-audit cargo-outdated cargo-fuzz cargo-tarpaulin cargo-geiger
