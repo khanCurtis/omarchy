@@ -9,3 +9,4 @@ omarchy plugin add https://github.com/akitaonrails/ai-usagebar.git --enable
 omarchy pkg aur add ai-usagebar-bin
 omarchy plugin add https://github.com/jankeesvw/omarchy-notification-center.git --enable
 omarchy plugin add https://github.com/DanSmith888/omarchy-momentum4.git --enable
+omarchy plugin add https://github.com/thinklinux/omacursorshake.git --enable
